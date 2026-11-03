@@ -1,15 +1,17 @@
 import { useRef } from "react";
 import gsap from "gsap";
+import { prefersReducedMotion } from "../lib/motion";
 
 export default function TiltCard({ children }) {
   const ref = useRef(null);
 
   const handleMove = (e) => {
-    // no tilt on touch screens
+    // no tilt on touch screens or for reduced motion
+    if (prefersReducedMotion()) return;
     if (!window.matchMedia("(hover: hover)").matches) return;
 
     const r = ref.current.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;  // -0.5 to 0.5
+    const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
 
     gsap.to(ref.current, {

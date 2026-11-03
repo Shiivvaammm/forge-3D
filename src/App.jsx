@@ -1,14 +1,15 @@
-import { useLayoutEffect } from "react";
+import { lazy, Suspense, useLayoutEffect } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import PageHero from "./components/PageHero";
 import useSmoothScroll from "./hooks/useSmoothScroll";
-import Home from "./pages/Home";
 import Builds from "./pages/Builds";
 import Stock from "./pages/Stock";
 import Contact from "./pages/Contact";
 
-// jump to the top whenever the route changes
+// the heavy 3D homepage is only downloaded when someone visits "/"
+const Home = lazy(() => import("./pages/Home"));
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useLayoutEffect(() => {
@@ -35,13 +36,15 @@ export default function App() {
     <>
       <ScrollToTop />
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/builds" element={<Builds />} />
-        <Route path="/stock" element={<Stock />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/builds" element={<Builds />} />
+          <Route path="/stock" element={<Stock />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }

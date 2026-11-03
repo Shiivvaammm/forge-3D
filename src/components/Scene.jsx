@@ -1,35 +1,55 @@
+import { lazy, Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, ContactShadows } from "@react-three/drei";
+import { Environment, ContactShadows, PerformanceMonitor } from "@react-three/drei";
 import PlaceHolderCar from "./PlaceHolderCar";
 import CameraRig from "./CameraRig";
 import IntroGroup from "./IntroGroup";
 import ApproachRig from "./ApproachRig";
+import { USE_REAL_MODEL } from "../config";
+
+// only downloaded when the real model is switched on
+const Car = lazy(() => import("./Car"));
+
+const device = () => window.devicePixelRatio || 1;
 
 // mode: "back" (behind content) | "hidden" (not rendered) | "front" (above content)
 export default function Scene({ mode = "back" }) {
+  const [dpr, setDpr] = useState(() => Math.min(device(), 1.5));
   const hidden = mode === "hidden";
+
   const className =
     "canvas-root" +
     (hidden ? " canvas-root--hidden" : "") +
     (mode === "front" ? " canvas-root--front" : "");
 
   return (
-    <div className={className}>
+    <div className={className} aria-hidden="true">
       <Canvas
-        shadows
-        dpr={[1, 2]}
+        dpr={dpr}
         frameloop={hidden ? "never" : "always"}
         camera={{ position: [5.5, 2, 6.5], fov: 35 }}
       >
+        {/* sharper when the device copes, softer when it struggles */}
+        <PerformanceMonitor
+          onIncline={() => setDpr(Math.min(device(), 2))}
+          onDecline={() => setDpr(1)}
+        />
+
         <ambientLight intensity={0.35} />
-        <directionalLight position={[5, 6, 3]} intensity={1.5} castShadow />
+        <directionalLight position={[5, 6, 3]} intensity={1.5} />
         <Environment preset="city" />
 
         <CameraRig />
         <ApproachRig />
 
         <IntroGroup>
-          <PlaceHolderCar />
+          {USE_REAL_MODEL ? (
+            <Suspense fallback={null}>
+              <Car />
+            </Suspense>
+          ) : (
+            <PlaceHolderCar />
+          )}
         </IntroGroup>
 
         <ContactShadows position={[0, 0, 0]} opacity={0.45} scale={14} blur={2.6} far={4} />
