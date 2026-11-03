@@ -5,7 +5,7 @@ import { services, servicesIntro } from "../data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// one hue per placeholder picture (replace with real images later)
+// fallback colours for any service without a photo
 const hues = [16, 222, 158, 280, 42, 190];
 
 export default function Services({ onCover }) {
@@ -30,12 +30,10 @@ export default function Services({ onCover }) {
           pin: true,
           scrub: true,
           anticipatePin: 1,
-          invalidateOnRefresh: true, // recalculate on resize
-          // once this section covers the screen, the 3D canvas can switch off
+          invalidateOnRefresh: true,
           onEnter: () => onCover?.(true),
           onLeaveBack: () => onCover?.(false),
           onRefresh: (self) => onCover?.(self.scroll() >= self.start),
-          // counter + progress bar, written straight to the DOM (no React re-render)
           onUpdate: (self) => {
             const i = Math.round(self.progress * total);
             counter.current.textContent = String(i).padStart(2, "0");
@@ -44,7 +42,6 @@ export default function Services({ onCover }) {
         },
       });
 
-      // per-panel effects, triggered by the panel's position inside the moving track
       gsap.utils.toArray(".service-panel", track.current).forEach((panel) => {
         const img = panel.querySelector(".service-img-inner");
         const copy = panel.querySelectorAll(".service-copy > *");
@@ -100,13 +97,19 @@ export default function Services({ onCover }) {
         {services.map((s, i) => (
           <article className="service-panel" key={s.title}>
             <div className="service-img">
-              <div
-                className="service-img-inner"
-                style={{ "--hue": hues[i % hues.length] }}
-              >
-                <span className="mono">IMAGE PLACEHOLDER</span>
-                <span className="service-img-num">{String(i + 1).padStart(2, "0")}</span>
-              </div>
+              {s.image ? (
+                <div className="service-img-inner service-img-inner--photo">
+                  <img src={s.image} alt={s.title} loading="lazy" />
+                </div>
+              ) : (
+                <div
+                  className="service-img-inner"
+                  style={{ "--hue": hues[i % hues.length] }}
+                >
+                  <span className="mono">IMAGE PLACEHOLDER</span>
+                  <span className="service-img-num">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+              )}
             </div>
 
             <div className="service-copy">

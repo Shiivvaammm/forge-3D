@@ -42,12 +42,36 @@ export const servicesIntro = {
 };
 
 export const services = [
-  { title: "Bodystyling", text: "From aero styling to carbon details and exterior refinement, bodywork is designed to change the vehicle’s presence without compromising its original character." },
-  { title: "Interior", text: "Material, stitching, trim and finish are selected to create an interior that feels personal, tactile and composed. We turn the cabin into a space of identity, comfort and control." },
-  { title: "Wheels", text: "Bespoke wheel upgrades designed to enhance stance, proportion and road presence, with fitments selected to complement the vehicle’s character and performance." },
-  { title: "Lighting", text: "Lighting gives a vehicle its expression. From subtle tinting to signature illumination and refined visual details, we use light to sharpen character, presence and atmosphere." },
-  { title: "Exhaust", text: "Exhaust upgrades are chosen for tone, response and presence. Not noise for the sake of noise, but a sound profile that gives the vehicle more character and depth." },
-  { title: "Protection", text: "Paint protective film solutions that preserve the finish of the vehicle while allowing for satin finishes, coloured films and full visual transformation." },
+  {
+    title: "Bodystyling",
+    image: "/images/services/bodystyling.jpg",
+    text: "From aero styling to carbon details and exterior refinement, bodywork is designed to change the vehicle’s presence without compromising its original character.",
+  },
+  {
+    title: "Interior",
+    image: "/images/services/interior.jpg",
+    text: "Material, stitching, trim and finish are selected to create an interior that feels personal, tactile and composed. We turn the cabin into a space of identity, comfort and control.",
+  },
+  {
+    title: "Wheels",
+    image: "/images/services/wheels.jpg",
+    text: "Bespoke wheel upgrades designed to enhance stance, proportion and road presence, with fitments selected to complement the vehicle’s character and performance.",
+  },
+  {
+    title: "Lighting",
+    image: "/images/services/lighting.jpg",
+    text: "Lighting gives a vehicle its expression. From subtle tinting to signature illumination and refined visual details, we use light to sharpen character, presence and atmosphere.",
+  },
+  {
+    title: "Exhaust",
+    image: "/images/services/exhaust.jpg",
+    text: "Exhaust upgrades are chosen for tone, response and presence. Not noise for the sake of noise, but a sound profile that gives the vehicle more character and depth.",
+  },
+  {
+    title: "Protection",
+    image: "/images/services/protection.jpg",
+    text: "Paint protective film solutions that preserve the finish of the vehicle while allowing for satin finishes, coloured films and full visual transformation.",
+  },
 ];
 
 export const ordinary = {

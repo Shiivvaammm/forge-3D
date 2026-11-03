@@ -1060,3 +1060,17 @@ textarea.input {
   height: 100%;
   object-fit: cover; /* fills the frame without stretching */
 }
+
+/* ---------- Service photos ---------- */
+.service-img-inner--photo {
+  padding: 0;
+  background: #1c1c1c; /* shows while the photo loads */
+}
+
+.service-img-inner--photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
