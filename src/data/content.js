@@ -77,17 +77,55 @@ export const socials = {
   facebook: "https://www.facebook.com/profile.php?id=61588925168989",
 };
 
-// ---------- Real data from the reference site ----------
-
 export const buildItems = [
-  { id: "FA001", name: "Defender 110", text: "Satin grey against gloss black, widened arches and a stance built to be noticed." },
-  { id: "FA002", name: "911 Carrera", text: "Satin black from crest to calliper, with every brightwork detail taken out of the picture." },
-  { id: "FA005", name: "Defender 130", text: "Satin graphite over gloss black, widened at every arch and loaded for the long way round." },
-  { id: "FA006", name: "Urus", text: "Gloss yellow against forged carbon, with nothing about it asking to be overlooked." },
-  { id: "FA007", name: "M3 Touring", text: "Grey held to a mirror gloss, carbon at every edge, and yellow light in the eyes." },
-  { id: "FA008", name: "G63", text: "Satin green over tan leather, with bronze standing in wherever chrome used to be." },
-  { id: "FA009", name: "Defender 90", text: "Military green against gloss black, short in the wheelbase and heavy in the stance." },
-  { id: "FA010", name: "RS3", text: "Satin PPF from bumper to hatch, a Maxton kit at every edge, and red calipers behind the spokes." },
+  {
+    id: "FA001",
+    name: "Defender 110",
+    text: "Satin grey against gloss black, widened arches and a stance built to be noticed.",
+    images: ["/images/builds/fa001.jpg"],
+  },
+  {
+    id: "FA002",
+    name: "911 Carrera",
+    text: "Satin black from crest to calliper, with every brightwork detail taken out of the picture.",
+    images: ["/images/builds/fa002.jpg"],
+  },
+  {
+    id: "FA005",
+    name: "Defender 130",
+    text: "Satin graphite over gloss black, widened at every arch and loaded for the long way round.",
+    images: ["/images/builds/fa005.jpg"],
+  },
+  {
+    id: "FA006",
+    name: "Urus",
+    text: "Gloss yellow against forged carbon, with nothing about it asking to be overlooked.",
+    images: ["/images/builds/fa006.jpg"],
+  },
+  {
+    id: "FA007",
+    name: "M3 Touring",
+    text: "Grey held to a mirror gloss, carbon at every edge, and yellow light in the eyes.",
+    images: ["/images/builds/fa007.jpg"],
+  },
+  {
+    id: "FA008",
+    name: "G63",
+    text: "Satin green over tan leather, with bronze standing in wherever chrome used to be.",
+    images: ["/images/builds/fa008.jpg"],
+  },
+  {
+    id: "FA009",
+    name: "Defender 90",
+    text: "Military green against gloss black, short in the wheelbase and heavy in the stance.",
+    images: ["/images/builds/fa009.jpg"],
+  },
+  {
+    id: "FA010",
+    name: "RS3",
+    text: "Satin PPF from bumper to hatch, a Maxton kit at every edge, and red calipers behind the spokes.",
+    images: ["/images/builds/fa010.jpg"], 
+  },
 ];
 
 export const stockItems = [
@@ -96,12 +134,14 @@ export const stockItems = [
     name: "Range Rover D300",
     price: "£88,595",
     text: "Satin protection, sculpted carbon and 24-inch forged alloys for undeniable road presence.",
+    images: ["/images/stock/fa003.jpg"],
   },
   {
     id: "FA004",
     name: "VW T6.1",
     status: "Coming soon",
     text: "This build will be available soon. Check back for updates.",
+    images: ["/images/stock/fa004.jpg"],
   },
 ];
 

@@ -37,28 +37,36 @@ export default function CardGrid({
         )}
 
         <div className="cards-grid">
-          {items.map((item, i) => (
-            <div className="reveal" key={item.id}>
-              <TiltCard>
-                <div
-                  className="card-img"
-                  style={{ "--hue": (hueStart + i * 50) % 360 }}
-                >
-                  <span className="mono">IMAGE PLACEHOLDER</span>
-                </div>
+          {items.map((item, i) => {
+            const photo = item.images?.[0];
 
-                <div className="card-body">
-                  <div className="card-top mono">
-                    <span className="card-tag">#{item.id}</span>
-                    {item.price && <span>{item.price}</span>}
-                    {item.status && <span className="card-status">{item.status}</span>}
+            return (
+              <div className="reveal" key={item.id}>
+                <TiltCard>
+                  <div
+                    className={`card-img${photo ? " card-img--photo" : ""}`}
+                    style={{ "--hue": (hueStart + i * 50) % 360 }}
+                  >
+                    {photo ? (
+                      <img src={photo} alt={item.name} loading="lazy" />
+                    ) : (
+                      <span className="mono">IMAGE PLACEHOLDER</span>
+                    )}
                   </div>
-                  <h3 className="card-name">{item.name}</h3>
-                  <p className="body-text">{item.text}</p>
-                </div>
-              </TiltCard>
-            </div>
-          ))}
+
+                  <div className="card-body">
+                    <div className="card-top mono">
+                      <span className="card-tag">#{item.id}</span>
+                      {item.price && <span>{item.price}</span>}
+                      {item.status && <span className="card-status">{item.status}</span>}
+                    </div>
+                    <h3 className="card-name">{item.name}</h3>
+                    <p className="body-text">{item.text}</p>
+                  </div>
+                </TiltCard>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
