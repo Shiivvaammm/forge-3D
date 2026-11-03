@@ -11,6 +11,7 @@ export default function Brands() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // the track holds the logos twice, so sliding by -50% loops seamlessly
       const marquee = gsap.to(".marquee-track", {
         xPercent: -50,
         ease: "none",
@@ -40,15 +41,32 @@ export default function Brands() {
   }, []);
 
   return (
-    <section ref={root} className="brands">
+    <section ref={root} className="brands section--dark">
       <p className="eyebrow brands-eyebrow">Marques</p>
+
       <div className="marquee">
         <div className="marquee-track">
-          {[...brands, ...brands].map((b, i) => (
-            <span className="marquee-item" key={i}>
-              {b}
-            </span>
-          ))}
+          {[...brands, ...brands].map((b, i) => {
+            const isCopy = i >= brands.length; // second set is only for the loop
+
+            return (
+              <span
+                className="marquee-logo"
+                key={i}
+                style={{ "--h": b.h }}
+                aria-hidden={isCopy || undefined}
+              >
+                <img
+                  src={b.logo}
+                  alt={isCopy ? "" : b.name}
+                  width={b.w}
+                  height={b.h}
+                  decoding="async"
+                  draggable="false"
+                />
+              </span>
+            );
+          })}
         </div>
       </div>
     </section>

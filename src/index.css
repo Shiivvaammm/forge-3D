@@ -1074,3 +1074,30 @@ textarea.input {
   height: 100%;
   object-fit: cover;
 }
+
+/* ---------- Brand logo marquee ---------- */
+.brands {
+  --logo-scale: 1.3; /* one number resizes every logo together */
+}
+
+.marquee-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* both halves of the track must be identical widths, so spacing lives on each item */
+  padding-right: clamp(3.5rem, 8vw, 7rem);
+}
+
+.marquee-logo img {
+  display: block;
+  width: auto;
+  height: calc(var(--h) * 1px * var(--logo-scale));
+  opacity: 0.85;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .brands {
+    --logo-scale: 1;
+  }
+}

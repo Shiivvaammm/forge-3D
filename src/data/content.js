@@ -30,9 +30,20 @@ export const approach = {
 };
 
 export const brands = [
-  "Aston Martin", "Audi", "Bentley", "Jaguar", "Lamborghini", "Land Rover",
-  "Lotus", "Lucid", "Maserati", "McLaren", "Mercedes", "Polestar",
-  "Porsche", "Rolls Royce",
+  { name: "Aston Martin", logo: "/images/brands/aston-martin.svg", w: 120, h: 28 },
+  { name: "Audi", logo: "/images/brands/audi.svg", w: 120, h: 42 },
+  { name: "Bentley", logo: "/images/brands/bentley.svg", w: 120, h: 38 },
+  { name: "Jaguar", logo: "/images/brands/jaguar.svg", w: 120, h: 10 },
+  { name: "Lamborghini", logo: "/images/brands/lamborghini.svg", w: 52, h: 60 },
+  { name: "Land Rover", logo: "/images/brands/land-rover.svg", w: 115, h: 60 },
+  { name: "Lotus", logo: "/images/brands/lotus.svg", w: 60, h: 60 },
+  { name: "Lucid", logo: "/images/brands/lucid.svg", w: 120, h: 8 },
+  { name: "Maserati", logo: "/images/brands/maserati.svg", w: 120, h: 60 },
+  { name: "McLaren", logo: "/images/brands/mclaren.svg", w: 120, h: 18 },
+  { name: "Mercedes", logo: "/images/brands/mercedes.svg", w: 60, h: 60 },
+  { name: "Polestar", logo: "/images/brands/polestar.svg", w: 120, h: 27 },
+  { name: "Porsche", logo: "/images/brands/porsche.svg", w: 120, h: 8 },
+  { name: "Rolls Royce", logo: "/images/brands/rolls-royce.svg", w: 49, h: 60 },
 ];
 
 export const servicesIntro = {
@@ -78,7 +89,7 @@ export const ordinary = {
   word: "Ordinary",
   title: "Ends Here",
   text: "Complete expressions of taste, intent and individuality, shaped through detail, restraint and presence.",
-  cars: ["Mercedes G-Wagen", "Porsche 992 GT3 RS", "Land Rover Defender 110"],
+  cars: ["Mercedes G-Wagon", "Porsche 992 GT3 RS", "Land Rover Defender 110"],
 };
 
 export const builds = {
