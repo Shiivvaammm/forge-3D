@@ -68,6 +68,7 @@ export default function Home() {
           cta={builds.cta}
           to="/builds"
           items={buildItems.slice(0, 3)}
+          count={buildItems.length}
           hueStart={16}
         />
 
@@ -79,8 +80,13 @@ export default function Home() {
           cta={stock.cta}
           to="/stock"
           items={stockItems}
+          count={stockItems.length}
           hueStart={200}
+          cardAction="Enquire"
+          endTile
         />
+
+        
 
         <FinalCta />
         <Footer />
