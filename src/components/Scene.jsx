@@ -6,6 +6,7 @@ import CameraRig from "./CameraRig";
 import IntroGroup from "./IntroGroup";
 import ApproachRig from "./ApproachRig";
 import { USE_REAL_MODEL } from "../config";
+import { site } from "../data/content";
 
 // only downloaded when the real model is switched on
 const Car = lazy(() => import("./Car"));
@@ -24,12 +25,17 @@ export default function Scene({ mode = "back" }) {
 
   return (
     <div className={className} aria-hidden="true">
+      {/* decoration that sits BEHIND the car */}
+      <div className="backdrop">
+        <span className="backdrop-word">{site.name.split(" ")[0]}</span>
+        <span className="backdrop-dial" />
+      </div>
+
       <Canvas
         dpr={dpr}
         frameloop={hidden ? "never" : "always"}
         camera={{ position: [5.5, 2, 6.5], fov: 35 }}
       >
-        {/* sharper when the device copes, softer when it struggles */}
         <PerformanceMonitor
           onIncline={() => setDpr(Math.min(device(), 2))}
           onDecline={() => setDpr(1)}

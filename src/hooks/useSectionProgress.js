@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { scrollState } from "../lib/scrollState";
 
 // Writes a section's 0 to 1 scroll progress into scrollState[key]
+// and into a CSS variable named --p-<key> (for example --p-hero)
 export default function useSectionProgress(
   ref,
   key,
@@ -11,8 +12,11 @@ export default function useSectionProgress(
   useEffect(() => {
     if (!ref.current) return;
 
+    const html = document.documentElement;
+
     const write = (self) => {
       scrollState[key] = self.progress;
+      html.style.setProperty(`--p-${key}`, self.progress.toFixed(4));
     };
 
     const trigger = ScrollTrigger.create({
@@ -23,6 +27,9 @@ export default function useSectionProgress(
       onRefresh: write,
     });
 
-    return () => trigger.kill();
+    return () => {
+      trigger.kill();
+      html.style.removeProperty(`--p-${key}`);
+    };
   }, [ref, key, start, end]);
 }

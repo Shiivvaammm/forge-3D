@@ -1330,3 +1330,203 @@ body::after {
 .card:hover .card-img--photo img {
   transform: scale(1.06);
 }
+
+/* ---------- Design pass 1b: clean hero (two zones, no overlap) ---------- */
+.hero {
+  justify-content: flex-end; /* everything sits in the bottom band; the car owns the top */
+  gap: 1.5rem;
+  padding-top: 0;
+  padding-bottom: 4vh;
+}
+
+.hero-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  align-items: end;
+  gap: 2rem 4rem;
+}
+
+/* sized by width AND height, so it never grows into the car on short screens */
+.display--hero {
+  font-size: clamp(2.25rem, min(5.6vw, 9vh), 6.5rem);
+  line-height: 0.95;
+}
+
+.hero-line > span.is-accent {
+  color: var(--accent);
+}
+
+.hero-side {
+  max-width: none; /* the grid column sets the width */
+}
+
+.hero-bottom {
+  justify-content: flex-start;
+}
+
+/* soft light behind the car, now matching its new position */
+.canvas-root:not(.canvas-root--front) {
+  background:
+    radial-gradient(46% 50% at 56% 38%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(30% 32% at 64% 46%, rgba(255, 77, 26, 0.1), rgba(255, 77, 26, 0) 70%);
+}
+
+@media (max-width: 800px) {
+  .hero-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Hero: centred car ---------- */
+.canvas-root:not(.canvas-root--front) {
+  background:
+    radial-gradient(46% 50% at 50% 38%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(30% 32% at 52% 46%, rgba(255, 77, 26, 0.1), rgba(255, 77, 26, 0) 70%);
+}
+
+.display--hero {
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Design pass 2: depth behind the car ---------- */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* fades out as the hero scrolls away (--p-hero goes 0 to 1) */
+  opacity: max(0, calc(1 - var(--p-hero, 0) * 1.8));
+}
+
+.canvas-root--front .backdrop {
+  display: none; /* the dark Ordinary section has its own look */
+}
+
+/* giant outlined word, only visible around the car */
+.backdrop-word {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, calc(-50% - var(--p-hero, 0) * 14vh));
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 24vw, 30rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(21, 21, 21, 0.11);
+  user-select: none;
+}
+
+/* slowly turning ring of tick marks */
+.backdrop-dial {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: min(56vh, 42vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, calc(-50% - var(--p-hero, 0) * 14vh));
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(21, 21, 21, 0.34) 0 0.4deg,
+    transparent 0.4deg 3deg
+  );
+  /* keep only the outer 14px, so it reads as a ring of ticks */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 14px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 14px));
+  animation: dial-spin 180s linear infinite;
+}
+
+@keyframes dial-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop-dial {
+    animation: none;
+  }
+}
+
+/* bottom row: scroll cue on the left, stats on the right */
+.hero-bottom {
+  justify-content: space-between;
+}
+
+.hero-stats {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.hero-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.hero-stat + .hero-stat {
+  padding-left: clamp(1.25rem, 3vw, 2.5rem);
+  border-left: 1px solid var(--line);
+}
+
+.hero-stat strong {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+@media (max-width: 640px) {
+  .hero-stats {
+    display: none;
+  }
+}
+
+/* ---------- Design pass 3: dark graphite stage (hero + approach) ---------- */
+
+/* re-theme the two sections that sit on the canvas */
+.hero,
+.approach {
+  --fg: #f2f0ec;
+  --fg-soft: rgba(242, 240, 236, 0.66);
+  --line: rgba(242, 240, 236, 0.18);
+  --bg: #121214; /* used by the solid button for its text colour */
+  color: var(--fg);
+}
+
+/* the stage itself: soft light behind the car, orange glow on the floor, dark edges */
+.canvas-root:not(.canvas-root--front) {
+  background:
+    radial-gradient(120% 100% at 50% 40%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.4) 100%),
+    radial-gradient(50% 55% at 50% 40%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(36% 28% at 50% 58%, rgba(255, 77, 26, 0.18), rgba(255, 77, 26, 0) 70%),
+    linear-gradient(180deg, #18181b 0%, #0e0e10 100%);
+}
+
+/* the giant FORGE: filled, so it's visible, but darker than the car */
+.backdrop-word {
+  background: linear-gradient(180deg, #3b3b43 0%, #1c1c21 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+}
+
+/* tick marks switch to light */
+.backdrop-dial {
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(242, 240, 236, 0.4) 0 0.4deg,
+    transparent 0.4deg 3deg
+  );
+}
+
+/* header pill gets a thin edge so it doesn't melt into the dark background */
+.site-header {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

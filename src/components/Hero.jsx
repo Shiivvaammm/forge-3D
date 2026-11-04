@@ -1,17 +1,22 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import { site, contact } from "../data/content";
+import { site, contact, brands, buildItems, stockItems } from "../data/content";
 import useSectionProgress from "../hooks/useSectionProgress";
 
-const lines = ["For Those Who", "Refuse", "Ordinary"];
+const lines = ["For Those Who Refuse", "Ordinary"];
+
+// numbers come straight from your data, so they stay correct when it changes
+const stats = [
+  { value: brands.length, label: "Marques" },
+  { value: buildItems.length + stockItems.length, label: "Builds" },
+  { value: contact.sites.length, label: "Studios" },
+];
 
 export default function Hero({ ready }) {
   const root = useRef(null);
 
   useSectionProgress(root, "hero", { start: "top top", end: "bottom top" });
-
-  const appointment = contact.methods.find((m) => m.label === "Visit Us")?.value;
 
   useEffect(() => {
     if (!ready) return;
@@ -21,7 +26,6 @@ export default function Hero({ ready }) {
         .timeline({ delay: 0.3 })
         .fromTo(
           ".hero-line > span",
-          // y: 0 on both sides overrides the pixel offset GSAP reads from the CSS
           { yPercent: 110, y: 0 },
           { yPercent: 0, y: 0, duration: 1.2, ease: "power4.out", stagger: 0.12 }
         )
@@ -38,16 +42,13 @@ export default function Hero({ ready }) {
 
   return (
     <section ref={root} className="section hero">
-      <div className="hero-top mono hero-fade">
-        <span>{site.name}</span>
-        <span>{contact.sites.join(" · ")}</span>
-      </div>
-
-      <div className="hero-inner">
+      <div className="hero-main">
         <h1 className="display display--hero">
-          {lines.map((line) => (
+          {lines.map((line, i) => (
             <span className="hero-line" key={line}>
-              <span>{line}</span>
+              <span className={i === lines.length - 1 ? "is-accent" : undefined}>
+                {line}
+              </span>
             </span>
           ))}
         </h1>
@@ -69,7 +70,15 @@ export default function Hero({ ready }) {
         <span className="scroll-cue">
           <i /> Scroll
         </span>
-        <span>{appointment}</span>
+
+        <div className="hero-stats">
+          {stats.map((s) => (
+            <div className="hero-stat" key={s.label}>
+              <strong>{String(s.value).padStart(2, "0")}</strong>
+              <span>{s.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
