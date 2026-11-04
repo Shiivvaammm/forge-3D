@@ -36,7 +36,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <Header />
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="route-fallback" />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/builds" element={<Builds />} />
