@@ -1530,3 +1530,189 @@ body::after {
 .site-header {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* ---------- Design pass 4: Approach ---------- */
+.approach {
+  justify-content: space-between;
+  padding-top: 13vh;
+  padding-bottom: 6vh;
+}
+
+.approach-top {
+  max-width: 32rem;
+}
+
+.approach-head.stack > * + * {
+  margin-top: 1rem;
+}
+
+.approach-head .h2 {
+  font-size: clamp(1.9rem, min(3.6vw, 6.5vh), 3.4rem);
+}
+
+.approach-head .body-text {
+  font-size: 0.95rem;
+}
+
+/* step tabs replace the old progress bar */
+.approach-steps {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.approach-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  opacity: 0.4;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.approach-step.is-active {
+  opacity: 1;
+}
+
+.approach-step-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.approach-step-line {
+  display: block;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.approach-step-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* pillar text: stacked in one grid cell, so the box is as tall as its tallest panel (never overflows) */
+.approach-panels {
+  display: grid;
+  align-self: flex-start;
+  width: min(32rem, 100%);
+  height: auto;
+}
+
+.approach-panel {
+  grid-area: 1 / 1;
+  position: static;
+  align-self: end;
+  gap: 0.75rem;
+}
+
+.approach .display--panel {
+  font-size: clamp(2.25rem, min(4.4vw, 8vh), 4.5rem);
+}
+
+@media (max-height: 560px), (max-width: 900px) {
+  .approach-head .body-text {
+    display: none; /* very short or narrow screens: keep only what fits */
+  }
+}
+
+/* ---------- Design pass 4: Services ---------- */
+.service-intro-title {
+  max-width: 26ch;
+  font-size: clamp(1.9rem, min(4vw, 7vh), 3.5rem);
+  line-height: 1.08;
+}
+
+.service-intro-title .muted {
+  color: rgba(242, 240, 236, 0.4);
+}
+
+/* each panel gets a faint glow in its own colour */
+.service-panel {
+  position: relative;
+}
+
+.service-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    50% 60% at 30% 50%,
+    hsl(var(--hue) 85% 50% / 0.16),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.service-img {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+/* soft shade at top and bottom, so the caption stays readable on any photo */
+.service-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    transparent 28%,
+    transparent 72%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  pointer-events: none;
+}
+
+.service-chip {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 2;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(14, 14, 14, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #f2f0ec;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* big outlined number behind the text */
+.service-copy {
+  position: relative;
+  isolation: isolate;
+}
+
+.service-ghost {
+  position: absolute;
+  top: -2.5rem;
+  right: -1rem;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 16vw, 14rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 240, 236, 0.12);
+  pointer-events: none;
+  user-select: none;
+}
+
+.service-copy .display--panel {
+  font-size: clamp(2.5rem, min(5.5vw, 11vh), 5.5rem);
+}
+
+.services-label {
+  min-width: 9rem;
+  color: #f2f0ec;
+  text-transform: uppercase;
+}

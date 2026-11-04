@@ -3,9 +3,12 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { scrollState } from "../lib/scrollState";
 
-// Hero composition on wide screens (fractions of the screen size)
-const HERO_SHIFT_X = 0; // bigger = car further right
-const HERO_SHIFT_Y = 0.16; // bigger = car higher up
+// Car position on wide screens, as fractions of the screen size.
+// X: negative = left, positive = right.  Y: bigger = higher up.
+const HERO_SHIFT_X = -0.04;
+const HERO_SHIFT_Y = 0.13;
+const APPROACH_SHIFT_X = 0.22; // car moves right while the Approach text is on the left
+const APPROACH_SHIFT_Y = 0.03;
 
 const target = new THREE.Vector3(0, 0.7, 0);
 const ordinaryCam = new THREE.Vector3(3.8, 1.0, 5.2);
@@ -41,12 +44,18 @@ export default function CameraRig() {
 
     state.camera.lookAt(target);
 
-    // keep the car in the top band of the hero, then glide it to the centre on scroll
+    // screen position of the car: hero spot -> approach spot -> back to centre
     const { width, height } = state.size;
     const wide = width > 900;
-    const heroOut = 1 - THREE.MathUtils.smoothstep(scrollState.hero, 0, 0.7);
-    const shiftX = wide ? HERO_SHIFT_X * width * heroOut : 0;
-    const shiftY = wide ? HERO_SHIFT_Y * height * heroOut : 0;
+
+    const toApproach = THREE.MathUtils.smoothstep(scrollState.hero, 0, 0.7);
+    const backToCentre = 1 - THREE.MathUtils.smoothstep(scrollState.approach, 0.9, 1);
+
+    const fx = THREE.MathUtils.lerp(HERO_SHIFT_X, APPROACH_SHIFT_X, toApproach) * backToCentre;
+    const fy = THREE.MathUtils.lerp(HERO_SHIFT_Y, APPROACH_SHIFT_Y, toApproach) * backToCentre;
+
+    const shiftX = wide ? fx * width : 0;
+    const shiftY = wide ? fy * height : 0;
     state.camera.setViewOffset(width, height, -shiftX, shiftY, width, height);
   });
 
