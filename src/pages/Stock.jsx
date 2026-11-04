@@ -17,7 +17,14 @@ export default function Stock() {
       >
         <p className="mono hero-fade page-note">{stockPage.note}</p>
       </PageHero>
-      <CardGrid dark head={false} items={stockItems} hueStart={200} />
+      <CardGrid
+        dark
+        head={false}
+        items={stockItems}
+        hueStart={200}
+        cardAction="Enquire"
+        endTile
+      />
       <FinalCta />
       <Footer />
     </main>

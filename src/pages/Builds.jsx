@@ -15,7 +15,7 @@ export default function Builds() {
         lines={buildsPage.lines}
         text={buildsPage.text}
       />
-      <CardGrid head={false} items={buildItems} hueStart={16} />
+      <CardGrid head={false} items={buildItems} hueStart={16} endTile />
       <FinalCta />
       <Footer />
     </main>

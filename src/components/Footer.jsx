@@ -9,19 +9,19 @@ const routes = {
 };
 
 export default function Footer() {
-  const phone = contact.methods[0];
+  const phone = contact.methods.find((m) => m.label === "Phone");
+  const visit = contact.methods.find((m) => m.label === "Visit Us");
 
   return (
-    <footer className="footer section--dark">
-      <div className="footer-top">
-        <div className="stack">
-          <p className="footer-brand">{site.name}</p>
-          <a href={phone.href} className="mono footer-phone">
-            {phone.value}
-          </a>
+    <footer className="ft section--dark">
+      <div className="ft-grid">
+        <div className="ft-brand stack">
+          <p className="ft-logo">{site.name}</p>
+          <p className="body-text">{site.subline}</p>
         </div>
 
-        <nav className="footer-links mono" aria-label="Footer">
+        <nav className="ft-col" aria-label="Footer">
+          <h4 className="ft-title mono">Navigate</h4>
           {nav.map((item) => (
             <Link key={item} to={routes[item]}>
               {item}
@@ -29,16 +29,37 @@ export default function Footer() {
           ))}
         </nav>
 
-        <div className="footer-links mono">
+        <div className="ft-col">
+          <h4 className="ft-title mono">Visit</h4>
+          <a href={phone?.href}>{phone?.value}</a>
+          {visit?.links?.map((l) => (
+            <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+              {l.label} ↗
+            </a>
+          ))}
+        </div>
+
+        <div className="ft-col">
+          <h4 className="ft-title mono">Follow</h4>
           <a href={socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
           <a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a>
           <a href={socials.facebook} target="_blank" rel="noreferrer">Facebook</a>
         </div>
       </div>
 
-      <p className="footer-legal mono">
-        © {new Date().getFullYear()} {site.name}
-      </p>
+      {/* giant word, cropped by the bottom edge */}
+      <div className="ft-wordwrap" aria-hidden="true">
+        <span className="ft-word">{site.name.split(" ")[0]}</span>
+      </div>
+
+      <div className="ft-bar mono">
+        <span>
+          © {new Date().getFullYear()} {site.name}
+        </span>
+        <button type="button" className="ft-top" onClick={() => window.scrollTo({ top: 0 })}>
+          Back to top ↑
+        </button>
+      </div>
     </footer>
   );
 }
