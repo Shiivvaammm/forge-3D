@@ -1,1 +1,1 @@
-export const USE_REAL_MODEL = false;
+export const USE_REAL_MODEL = true;

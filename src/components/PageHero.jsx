@@ -10,8 +10,8 @@ export default function PageHero({ eyebrow, lines, text, children }) {
         .timeline({ delay: 0.15 })
         .fromTo(
           ".hero-line > span",
-          { yPercent: 110 },
-          { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.1 }
+          { yPercent: 110, y: 0 },
+          { yPercent: 0, y: 0, duration: 1.1, ease: "power4.out", stagger: 0.1 }
         )
         .fromTo(
           ".hero-fade",
