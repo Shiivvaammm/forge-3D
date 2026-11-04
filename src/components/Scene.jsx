@@ -34,7 +34,7 @@ export default function Scene({ mode = "back" }) {
       <Canvas
         dpr={dpr}
         frameloop={hidden ? "never" : "always"}
-        camera={{ position: [5.5, 2, 6.5], fov: 35 }}
+        camera={{ position: [5.5, 2, 6.5], fov: 35, near: 0.05, far: 100 }}
       >
         <PerformanceMonitor
           onIncline={() => setDpr(Math.min(device(), 2))}

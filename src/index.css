@@ -1716,3 +1716,13 @@ body::after {
   color: #f2f0ec;
   text-transform: uppercase;
 }
+
+/* labels (Process, Services, Marques, ...) back to plain text */
+.eyebrow {
+  display: block;
+  width: auto;
+}
+
+.eyebrow::before {
+  display: none;
+}
