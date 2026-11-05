@@ -90,6 +90,12 @@ export const ordinary = {
   title: "Ends Here",
   text: "Complete expressions of taste, intent and individuality, shaped through detail, restraint and presence.",
   cars: ["Mercedes G-Wagon", "Porsche 992 GT3 RS", "Land Rover Defender 110"],
+  // one photo per car above, in the same order
+  images: [
+    "/images/builds/fa008.jpg", // G63
+    "/images/builds/fa002.jpg", // 911
+    "/images/builds/fa001.jpg", // Defender 110
+  ],
 };
 
 export const builds = {

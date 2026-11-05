@@ -13,60 +13,90 @@ export default function Contact() {
   useSmoothScroll();
   useReveal(root);
 
+  const find = (label) => contact.methods.find((m) => m.label === label);
+  const phone = find("Phone");
+  const email = find("Email");
+  const concierge = find("Concierge");
+  const visit = find("Visit Us");
+
   return (
-    <main ref={root} className="page">
-      <PageHero eyebrow="Contact" lines={contact.lines}>
-        <a href="#form" className="btn hero-fade">
-          {contact.cta} →
-        </a>
+    <main ref={root} className="page ct">
+      <PageHero eyebrow="Contact" lines={contact.lines} text={contact.formText}>
+        <div className="ct-hero-actions hero-fade">
+          <a href="#form" className="btn btn--solid">
+            {contact.cta} →
+          </a>
+          <a href={phone.href} className="btn">
+            {phone.value}
+          </a>
+        </div>
       </PageHero>
 
-      <section className="contact-methods">
-        {contact.methods.map((m) => (
-          <div className="method reveal" key={m.label}>
-            <p className="eyebrow">{m.label}</p>
-            <h3 className="method-value">
-              {m.href ? <a href={m.href}>{m.value}</a> : m.value}
-            </h3>
-            <p className="body-text">{m.note}</p>
+      {/* ways to get in touch */}
+      <section className="ct-bento">
+        <a className="ct-card ct-card--phone reveal" href={phone.href}>
+          <span className="eyebrow">{phone.label}</span>
+          <span className="ct-big">{phone.value}</span>
+          <span className="ct-note">{phone.note}</span>
+          <span className="ct-arrow" aria-hidden="true">↗</span>
+        </a>
 
-            {m.links && (
-              <div className="method-links mono">
-                {m.links.map((l) => (
-                  <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
-                    {l.label} ↗
-                  </a>
-                ))}
-              </div>
-            )}
+        <a className="ct-card ct-card--mail reveal" href="#form">
+          <span className="eyebrow">{email.label}</span>
+          <span className="ct-big ct-big--sm">{email.value}</span>
+          <span className="ct-note">{email.note}</span>
+          <span className="ct-arrow" aria-hidden="true">↓</span>
+        </a>
+
+        <div className="ct-card ct-card--concierge reveal">
+          <span className="eyebrow">{concierge.label}</span>
+          <span className="ct-big ct-big--sm">{concierge.value}</span>
+          <span className="ct-note">{concierge.note}</span>
+        </div>
+
+        <div className="ct-card ct-card--visit reveal">
+          <span className="eyebrow">{visit.label}</span>
+          <span className="ct-big ct-big--sm">{visit.value}</span>
+          <span className="ct-note">{visit.note}</span>
+          <div className="ct-studios">
+            {visit.links.map((l) => (
+              <a key={l.label} className="ct-studio mono" href={l.href} target="_blank" rel="noreferrer">
+                {l.label} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
           </div>
-        ))}
+        </div>
       </section>
 
-      <Brands />
-
+      {/* the form */}
       <section id="form" className="form-section">
         <div className="form-intro stack reveal">
           <p className="eyebrow">Enquiry</p>
           <h2 className="h2">{contact.formTitle}</h2>
           <p className="body-text">{contact.formText}</p>
+          <p className="body-text form-direct">
+            Prefer to talk? <a href={phone.href}>{phone.value}</a>
+          </p>
         </div>
         <EnquiryForm />
       </section>
 
-      <section className="process">
+      {/* the process */}
+      <section className="ct-process">
         <h2 className="h2 reveal">{contact.processTitle}</h2>
-        <div className="process-steps">
+        <ol className="ct-steps">
           {contact.process.map((step, i) => (
-            <div className="process-step reveal" key={step.title}>
-              <span className="process-num">0{i + 1}</span>
-              <h3 className="method-value">{step.title}</h3>
+            <li className="ct-step reveal" key={step.title}>
+              <span className="ct-dot" aria-hidden="true" />
+              <span className="ct-stepnum mono">Step 0{i + 1}</span>
+              <h3 className="ct-steptitle">{step.title}</h3>
               <p className="body-text">{step.text}</p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </section>
 
+      <Brands />
       <Footer />
     </main>
   );

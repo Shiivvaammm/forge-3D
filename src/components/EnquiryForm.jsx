@@ -28,6 +28,20 @@ function Field({ label, error, optional, full, children }) {
   );
 }
 
+// tappable options instead of a dropdown
+function Pills({ name, options, value, onChange }) {
+  return (
+    <div className="pills" role="radiogroup">
+      {options.map((o) => (
+        <label key={o} className={`pill${value === o ? " is-on" : ""}`}>
+          <input type="radio" name={name} value={o} checked={value === o} onChange={onChange} />
+          {o}
+        </label>
+      ))}
+    </div>
+  );
+}
+
 export default function EnquiryForm() {
   const [values, setValues] = useState(empty);
   const [file, setFile] = useState(null);
@@ -35,8 +49,7 @@ export default function EnquiryForm() {
   const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(false);
 
-  const onChange = (e) =>
-    setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
+  const onChange = (e) => setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
 
   const onFile = (e) => {
     const f = e.target.files?.[0];
@@ -81,6 +94,10 @@ export default function EnquiryForm() {
   if (sent) {
     return (
       <div className="form-sent stack">
+        <svg className="tick" viewBox="0 0 52 52" aria-hidden="true">
+          <circle cx="26" cy="26" r="24" />
+          <path d="M15 27l8 8 14-16" />
+        </svg>
         <h3 className="h2">Thank you</h3>
         <p className="body-text">
           Your enquiry has been received. We aim to respond within 1–3 business days.
@@ -91,68 +108,84 @@ export default function EnquiryForm() {
 
   return (
     <form className="enquiry" onSubmit={onSubmit} noValidate>
-      <Field label="Full Name" error={errors.fullName}>
-        <input className="input" name="fullName" value={values.fullName} onChange={onChange} autoComplete="name" />
-      </Field>
+      <fieldset className="fs">
+        <legend className="fs-legend mono">
+          <b>01</b> About you
+        </legend>
+        <div className="fs-grid">
+          <Field label="Full Name" error={errors.fullName}>
+            <input className="input" name="fullName" value={values.fullName} onChange={onChange} autoComplete="name" />
+          </Field>
 
-      <Field label="Preferred Method of Contact" error={errors.method}>
-        <select className="input" name="method" value={values.method} onChange={onChange}>
-          <option value="">Please choose an option</option>
-          {contact.contactMethods.map((m) => (
-            <option key={m} value={m}>{m}</option>
-          ))}
-        </select>
-      </Field>
+          <Field label="Postcode" error={errors.postcode}>
+            <input className="input" name="postcode" value={values.postcode} onChange={onChange} autoComplete="postal-code" />
+          </Field>
 
-      <Field label="Email Address" error={errors.email}>
-        <input className="input" type="email" name="email" value={values.email} onChange={onChange} autoComplete="email" />
-      </Field>
+          <Field label="Email Address" error={errors.email}>
+            <input className="input" type="email" name="email" value={values.email} onChange={onChange} autoComplete="email" />
+          </Field>
 
-      <Field label="Phone Number" error={errors.phone}>
-        <input className="input" type="tel" name="phone" value={values.phone} onChange={onChange} autoComplete="tel" />
-      </Field>
+          <Field label="Phone Number" error={errors.phone}>
+            <input className="input" type="tel" name="phone" value={values.phone} onChange={onChange} autoComplete="tel" />
+          </Field>
 
-      <Field label="Postcode" error={errors.postcode}>
-        <input className="input" name="postcode" value={values.postcode} onChange={onChange} autoComplete="postal-code" />
-      </Field>
+          <div className="field field--full">
+            <span className="field-label">Preferred Method of Contact</span>
+            <Pills name="method" options={contact.contactMethods} value={values.method} onChange={onChange} />
+            {errors.method && <span className="field-error">{errors.method}</span>}
+          </div>
+        </div>
+      </fieldset>
 
-      <Field label="Preferred Site" error={errors.site}>
-        <select className="input" name="site" value={values.site} onChange={onChange}>
-          <option value="">Please choose an option</option>
-          {contact.sites.map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
-      </Field>
+      <fieldset className="fs">
+        <legend className="fs-legend mono">
+          <b>02</b> Your vehicle
+        </legend>
+        <div className="fs-grid">
+          <div className="field field--full">
+            <span className="field-label">Preferred Site</span>
+            <Pills name="site" options={contact.sites} value={values.site} onChange={onChange} />
+            {errors.site && <span className="field-error">{errors.site}</span>}
+          </div>
 
-      <Field label="Car Make / Model" error={errors.carModel}>
-        <input className="input" name="carModel" value={values.carModel} onChange={onChange} />
-      </Field>
+          <Field label="Car Make / Model" error={errors.carModel}>
+            <input className="input" name="carModel" value={values.carModel} onChange={onChange} />
+          </Field>
 
-      <Field label="Car Registration" error={errors.carReg}>
-        <input className="input" name="carReg" value={values.carReg} onChange={onChange} />
-      </Field>
+          <Field label="Car Registration" error={errors.carReg}>
+            <input className="input" name="carReg" value={values.carReg} onChange={onChange} />
+          </Field>
 
-      <div className="field field--full">
-        <span className="field-label">
-          Your Current Car<em>optional</em>
-        </span>
-        <label className="dropzone">
-          <input type="file" accept="image/jpeg,image/png" onChange={onFile} />
-          <span className="mono">{file ? file.name : "Click to upload or drag and drop"}</span>
-          <span className="mono dropzone-hint">JPG, PNG up to 10MB</span>
-        </label>
-        {fileError && <span className="field-error">{fileError}</span>}
-      </div>
+          <div className="field field--full">
+            <span className="field-label">
+              Your Current Car<em>optional</em>
+            </span>
+            <label className="dropzone">
+              <input type="file" accept="image/jpeg,image/png" onChange={onFile} />
+              <span className="mono">{file ? file.name : "Click to upload or drag and drop"}</span>
+              <span className="mono dropzone-hint">JPG, PNG up to 10MB</span>
+            </label>
+            {fileError && <span className="field-error">{fileError}</span>}
+          </div>
+        </div>
+      </fieldset>
 
-      <Field label="Message" optional full>
-        <textarea className="input" name="message" value={values.message} onChange={onChange} />
-      </Field>
+      <fieldset className="fs">
+        <legend className="fs-legend mono">
+          <b>03</b> Anything else
+        </legend>
+        <div className="fs-grid">
+          <Field label="Message" optional full>
+            <textarea className="input" name="message" value={values.message} onChange={onChange} />
+          </Field>
+        </div>
+      </fieldset>
 
-      <div className="field--full">
-        <button type="submit" className="btn">
+      <div className="form-submit">
+        <button type="submit" className="btn btn--solid">
           Submit Enquiry →
         </button>
+        <span className="mono form-note">We aim to respond within 1–3 business days</span>
       </div>
     </form>
   );

@@ -58,7 +58,7 @@ export default function Home() {
         <Hero ready={ready} />
         <Approach />
         <Services onCover={handleCover} />
-        <Ordinary onMode={setCanvasMode} />
+        <Ordinary  />
         <Brands />
 
         <CardGrid
