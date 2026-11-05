@@ -16,7 +16,10 @@ export default function Footer() {
     <footer className="ft section--dark">
       <div className="ft-grid">
         <div className="ft-brand stack">
-          <p className="ft-logo">{site.name}</p>
+          <p className="ft-logo">
+            <img className="ft-logo-mark" src="/logo-mark.svg" alt="" width="35" height="16" />
+            {site.name}
+          </p>
           <p className="body-text">{site.subline}</p>
         </div>
 

@@ -35,8 +35,9 @@ export default function Header() {
 
   return (
     <header ref={ref} className="site-header">
-      <Link to="/" className="site-logo">
-        {site.name}
+      <Link to="/" className="site-logo" aria-label={site.name}>
+        <img className="site-logo-mark" src="/logo-mark.svg" alt="" width="35" height="16" />
+        <span className="site-logo-text">{site.name}</span>
       </Link>
 
       <nav className="site-nav" aria-label="Main">

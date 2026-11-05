@@ -2906,3 +2906,260 @@ a.ct-card:hover .ct-arrow {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Brand logo mark ---------- */
+/* the orange dots are replaced by the real logo */
+.site-logo::before,
+.ft-logo::before {
+  display: none;
+}
+
+.site-logo {
+  gap: 0.7rem;
+}
+
+.site-logo-mark {
+  display: block;
+  width: auto;
+  height: 0.95rem;
+}
+
+.ft-logo {
+  gap: 0.8rem;
+}
+
+.ft-logo-mark {
+  display: block;
+  width: auto;
+  height: 1.1rem;
+}
+
+.ld-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ld-brand img {
+  display: block;
+  width: auto;
+  height: 1rem;
+  opacity: 0.9;
+}
+
+/* ---------- Ordinary: fly-through (CSS 3D) ---------- */
+.fx {
+  position: relative;
+  display: block;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* the camera: everything inside sits in real 3D space */
+.fx-scene {
+  position: absolute;
+  inset: 0;
+  perspective: 1000px;
+  perspective-origin: 50% 42%;
+}
+
+.fx-world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* every object: centred on screen, then pushed sideways (--x), up/down (--y), back (--z) and turned (--r) */
+.fx-item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform: translate3d(
+      calc(-50% + var(--x, 0px)),
+      calc(-50% + var(--y, 0px)),
+      var(--z, 0px)
+    )
+    rotateY(var(--r, 0deg));
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* the road: an orange dashed centre line and two thin rails, lying flat and running into the distance */
+.fx-floor {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90vw;
+  height: 6500px;
+  margin-left: -45vw;
+  transform-origin: 50% 0;
+  transform: translate3d(0, 45vh, 900px) rotateX(-90deg);
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(180deg, var(--accent) 0 110px, transparent 110px 240px) 50% 0 / 6px 100% no-repeat,
+    linear-gradient(rgba(242, 240, 236, 0.2), rgba(242, 240, 236, 0.2)) 0 0 / 2px 100% no-repeat,
+    linear-gradient(rgba(242, 240, 236, 0.2), rgba(242, 240, 236, 0.2)) 100% 0 / 2px 100% no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 6%, transparent 82%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 6%, transparent 82%);
+}
+
+/* the word that gets crossed out and flown through */
+.fx-word {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 18vw, 22rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #f2f0ec;
+}
+
+.fx-strike {
+  position: absolute;
+  left: -1%;
+  right: -1%;
+  top: 50%;
+  height: clamp(6px, 1.1vw, 18px);
+  margin-top: calc(clamp(6px, 1.1vw, 18px) / -2);
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* the cars: tall photos, tilted toward the centre of the road */
+.fx-card {
+  position: absolute;
+  height: min(90vh, 75vw);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #1a1a1d;
+  box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6);
+}
+
+.fx-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fx-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+}
+
+.fx-card--l {
+  --x: -27vw;
+  --r: 14deg;
+}
+
+.fx-card--r {
+  --x: 27vw;
+  --r: -14deg;
+}
+
+.fx-cap {
+  position: absolute;
+  left: 1.1rem;
+  bottom: 1rem;
+  z-index: 2;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  color: #f2f0ec;
+}
+
+/* the car's name, on the opposite side of the road from the car */
+.fx-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 30vw;
+  color: #f2f0ec;
+}
+
+.fx-label .mono {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.fx-label .display {
+  font-size: clamp(2.25rem, 5.2vw, 6rem);
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.fx-label--r {
+  --x: 25vw;
+  text-align: left;
+}
+
+.fx-label--l {
+  --x: -25vw;
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* "ENDS HERE" at the end of the road */
+.fx-title {
+  font-size: clamp(4rem, 17vw, 22rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #f2f0ec;
+}
+
+.fx-title .is-accent {
+  color: var(--accent);
+}
+
+.fx-foot {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 5vh;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.fx-text {
+  max-width: 28rem;
+}
+
+/* narrow screens: cars stand in the middle of the road, name underneath */
+@media (max-width: 800px) {
+  .fx-card--l,
+  .fx-card--r {
+    --x: 0px;
+    --y: -8vh;
+    --r: 0deg;
+    height: min(62vh, 110vw);
+  }
+
+  .fx-label--l,
+  .fx-label--r {
+    --x: 0px;
+    --y: 34vh;
+    max-width: 80vw;
+    align-items: center;
+    text-align: center;
+  }
+
+  .fx-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

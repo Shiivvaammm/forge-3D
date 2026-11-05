@@ -41,7 +41,7 @@ export default function Loader({ onDone }) {
     html.classList.add("is-loading"); // hides the navbar logo until the word lands on it
 
     const exit = () => {
-      const logo = document.querySelector(".site-logo");
+      const target = document.querySelector(".site-logo-text");
       const el = word.current;
 
       const tl = gsap.timeline({
@@ -53,25 +53,21 @@ export default function Loader({ onDone }) {
 
       tl.to(hud.current, { opacity: 0, duration: 0.4, ease: "power2.out" });
 
-      if (logo) {
-        // measure where the word is and where the navbar logo is
+      if (target) {
+        // measure where the word is and where the navbar text is
         gsap.set(el, { transformOrigin: "0% 50%" });
         const w = el.getBoundingClientRect();
-        const l = logo.getBoundingClientRect();
-        const rem = parseFloat(getComputedStyle(html).fontSize);
+        const l = target.getBoundingClientRect();
 
         const scale =
-          parseFloat(getComputedStyle(logo).fontSize) /
+          parseFloat(getComputedStyle(target).fontSize) /
           parseFloat(getComputedStyle(el).fontSize);
-
-        const targetLeft = l.left + rem * 1.15; // just after the orange dot
-        const targetMidY = l.top + l.height / 2;
 
         tl.to(
           el,
           {
-            x: targetLeft - w.left,
-            y: targetMidY - (w.top + w.height / 2),
+            x: l.left - w.left,
+            y: l.top + l.height / 2 - (w.top + w.height / 2),
             scale,
             duration: 1.5,
             ease: "power4.inOut",
@@ -128,7 +124,10 @@ export default function Loader({ onDone }) {
       </div>
 
       <div ref={hud} className="ld-hud mono">
-        <span>{site.name} — Loading</span>
+        <span className="ld-brand">
+          <img src="/logo-mark.svg" alt="" width="35" height="16" />
+          {site.name} — Loading
+        </span>
         <span ref={counter} className="ld-count">
           000
         </span>
