@@ -4,10 +4,13 @@ import FinalCta from "../components/FinalCta";
 import Footer from "../components/Footer";
 import useSmoothScroll from "../hooks/useSmoothScroll";
 import { buildsPage, buildItems } from "../data/content";
+import usePageTitle from "../hooks/usePageTitle";
+
+
 
 export default function Builds() {
   useSmoothScroll();
-
+  usePageTitle("Builds");  
   return (
     <main className="page">
       <PageHero

@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "../lib/motion";
+import { scroller } from "../lib/scroller";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,8 +19,10 @@ export default function useSmoothScroll(locked = false) {
 
     if (prefersReducedMotion()) return; // plain native scrolling
 
-    const lenis = new Lenis({ lerp: 0.1 });
+    // anchors: true makes links like href="#form" glide instead of jump
+    const lenis = new Lenis({ lerp: 0.1, anchors: true });
     lenisRef.current = lenis;
+    scroller.lenis = lenis;
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -31,6 +34,7 @@ export default function useSmoothScroll(locked = false) {
       gsap.ticker.remove(tick);
       lenis.destroy();
       lenisRef.current = null;
+      scroller.lenis = null;
     };
   }, []);
 

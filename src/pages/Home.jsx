@@ -13,9 +13,15 @@ import Footer from "../components/Footer";
 import useSmoothScroll from "../hooks/useSmoothScroll";
 import { scrollState, resetScrollState } from "../lib/scrollState";
 import { builds, stock, buildItems, stockItems } from "../data/content";
+import usePageTitle from "../hooks/usePageTitle";
 
-// lives outside the component, so it survives navigating away and back
+
+
+// remembered for the browser tab, so a refresh doesn't replay the loader
 let introPlayed = false;
+try {
+  introPlayed = sessionStorage.getItem("forge-intro") === "1";
+} catch {}
 
 export default function Home() {
   const [showLoader] = useState(!introPlayed);
@@ -24,6 +30,9 @@ export default function Home() {
 
   const handleDone = useCallback(() => {
     introPlayed = true;
+    try {
+      sessionStorage.setItem("forge-intro", "1");
+    } catch {}
     setReady(true);
   }, []);
 
@@ -38,6 +47,7 @@ export default function Home() {
   }, []);
 
   useSmoothScroll(!ready);
+  usePageTitle();
 
   useEffect(() => {
     if (!ready) return;

@@ -41,7 +41,10 @@ export default function Loader({ onDone }) {
     html.classList.add("is-loading"); // hides the navbar logo until the word lands on it
 
     const exit = () => {
-      const target = document.querySelector(".site-logo-text");
+      // land on the logo text; on narrow screens (where it's hidden) land on the mark instead
+      const target = [".site-logo-text", ".site-logo-mark"]
+        .map((q) => document.querySelector(q))
+        .find((el) => el && el.getBoundingClientRect().width > 0);
       const el = word.current;
 
       const tl = gsap.timeline({

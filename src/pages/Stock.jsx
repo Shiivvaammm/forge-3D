@@ -4,9 +4,14 @@ import FinalCta from "../components/FinalCta";
 import Footer from "../components/Footer";
 import useSmoothScroll from "../hooks/useSmoothScroll";
 import { stockPage, stockItems } from "../data/content";
+import usePageTitle from "../hooks/usePageTitle";
+
+
+
 
 export default function Stock() {
   useSmoothScroll();
+  usePageTitle("Stock");
 
   return (
     <main className="page">

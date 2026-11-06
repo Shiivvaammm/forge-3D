@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { site, nav, socials, contact } from "../data/content";
+import { scrollToTop } from "../lib/scroller";
 
 const routes = {
   Home: "/",
@@ -59,7 +60,7 @@ export default function Footer() {
         <span>
           © {new Date().getFullYear()} {site.name}
         </span>
-        <button type="button" className="ft-top" onClick={() => window.scrollTo({ top: 0 })}>
+        <button type="button" className="ft-top" onClick={scrollToTop}>
           Back to top ↑
         </button>
       </div>

@@ -6,12 +6,16 @@ import Footer from "../components/Footer";
 import useSmoothScroll from "../hooks/useSmoothScroll";
 import useReveal from "../hooks/useReveal";
 import { contact } from "../data/content";
+import usePageTitle from "../hooks/usePageTitle";
+
+
 
 export default function Contact() {
   const root = useRef(null);
 
   useSmoothScroll();
   useReveal(root);
+  usePageTitle("Contact");
 
   const find = (label) => contact.methods.find((m) => m.label === label);
   const phone = find("Phone");

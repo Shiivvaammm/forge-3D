@@ -3163,3 +3163,58 @@ a.ct-card:hover .ct-arrow {
     align-items: flex-start;
   }
 }
+
+/* ---------- Polish ---------- */
+
+/* slim dark scrollbar instead of the default grey one */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a52 #121214;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #121214;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #4a4a52;
+  border: 2px solid #121214;
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* nicer line breaks in headings and paragraphs */
+h1,
+h2,
+h3,
+.display,
+.h2 {
+  text-wrap: balance;
+}
+
+.body-text {
+  text-wrap: pretty;
+}
+
+/* phones: the pill header has to fit */
+@media (max-width: 600px) {
+  .site-header {
+    padding: 0.6rem 1rem;
+  }
+
+  .site-logo-text {
+    display: none;
+  }
+
+  .site-nav {
+    gap: 1rem;
+    font-size: 0.68rem;
+  }
+}
